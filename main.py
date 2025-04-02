@@ -1,37 +1,52 @@
-from PySide6 import QtCore, QtWidgets, QtGui
-import sys
-import random
+from fastapi import FastAPI, Form
+from pydantic import BaseModel
+from jinja2 import Environment, FileSystemLoader, PackageLoader, select_autoescape
+from pymongo import MongoClient
+#from typing import Annotated
 
-class MyWidget(QtWidgets.QWidget):
-    def __init__(self):
-        super().__init__()
+env = Environment(loader=FileSystemLoader('templates'))
+template = env.get_template(name="main.html")
+app = FastAPI()
+cliente = MongoClient('mongodb://localhost:27017')
+db = cliente['Biblioteca']
+collection = db['dados']
 
-        # Uma lista de olá mundo
-        self.hello = ["Hallo Welt", "Hei maailma", "Olá Mundo"]
-        
-        # Cria um botão 
-        self.button = QtWidgets.QPushButton("Click me")
+# título, autor, ano de publicação, gênero e status
+# Modelagem
 
-        # Cria um texto e coloca ele alinhado no centro
-        self.text = QtWidgets.QLabel("Hello World",
-                                     alignment=QtCore.Qt.AlignmentFlag.AlignCenter)
-        
-        self.interface = QtWidgets.QVBoxLayout(self)
-        self.interface.addWidget(self.text)
+class Biblioteca(BaseModel):
+    id: int
+    titulo: str
+    autor: str
+    genero: str
+    status: str
 
-        self.interface.addWidget(self.button)
-        self.button.clicked.connect(self.magic)
+@app.get("/")
+async def main():
+    return "Hello World"
 
-    @QtCore.Slot()
-    def magic(self):
-        self.text.setText(random.choice(self.hello))
+@app.get("/books")
+async def show_book():
+    books = list(collection.find({}, {"_id": 0})) # Id zero é para excluir todos ids (filtro)
+    return books
 
-# Executar a aplicação
+@app.post("/books")
+#async def add_book(data: Annotated[Biblioteca, Form()]):
+async def add_book(data: Biblioteca):
+    collection.insert_one(data.model_dump())
+    return {"message": "Deu certo"}
+
+@app.put("/books/{book_id}")
+async def update_book(book_id: int):
+    print(book_id)
+    livro = collection.find_one({"id": book_id}, {"_id": 0})
+    print(livro)
+    return livro
+"""
+@app.delete("/books/{book_id}")
+async def delete_book():
+    return {"message": "Nothing"}
+"""
 if __name__ == "__main__":
-    app = QtWidgets.QApplication([])
-
-    widget = MyWidget()
-    widget.resize(800, 600)
-    widget.show()
-
-    sys.exit(app.exec())
+    import uvicorn
+    uvicorn.run(app)

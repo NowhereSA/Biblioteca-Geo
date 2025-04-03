@@ -34,8 +34,8 @@ Antes de rodar o projeto, você precisa ter os seguintes requisitos instalados:
 Primeiro, faça o clone do repositório:
 
 ```bash
-git clone https://github.com/NowhereSA/GUI-Example.git
-cd GUI-Example
+git clone https://github.com/NowhereSA/Biblioteca-Geo.git
+cd Biblioteca-Geo
 ```
 
 ### 2. Instalando as Dependências

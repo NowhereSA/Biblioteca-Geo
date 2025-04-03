@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciar Livros</title>
+    <link rel="stylesheet" href="/static/livros.css">
+</head>
+<body>
+    <h1>Biblioteca</h1>
+    <div id="book-list">
+        <h2>Livros Disponíveis</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Título</th>
+                    <th>Autor</th>
+                    <th>Gênero</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Os dados serão inseridos dinamicamente -->
+                {% for book in books %}
+                <tr>
+                    <td>{{ book.titulo }}</td>
+                    <td>{{ book.autor }}</td>
+                    <td>{{ book.genero }}</td>
+                    <td>{{ book.status }}</td>
+                    <td>
+                        <button class="edit-btn" data-id="{{ book.id }}">Editar</button>
+                        <button class="delete-btn" data-id="{{ book.id }}">Excluir</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div id="edit-form" style="display: none;">
+        <h3>Editar Livro</h3>
+        <form id="book-edit-form">
+            <input type="hidden" id="book-id">
+            <label for="status">Status:</label>
+            <input type="text" id="status" required>
+            <button type="submit">Salvar</button>
+        </form>
+    </div>
+    
+    <script>
+        // Função de exclusão
+        document.querySelectorAll(".delete-btn").forEach(button => {
+            button.addEventListener("click", async () => {
+                const bookId = button.dataset.id;
+                const response = await fetch(`/books/${bookId}`, {
+                    method: "DELETE"
+                });
+                if (response.ok) {
+                    alert("Livro deletado com sucesso!");
+                    location.reload();
+                } else {
+                    alert("Erro ao excluir o livro.");
+                }
+            });
+        });
+
+        // Função de edição
+        document.querySelectorAll(".edit-btn").forEach(button => {
+            button.addEventListener("click", () => {
+                const bookId = button.dataset.id;
+                const form = document.getElementById("edit-form");
+                form.style.display = "block";
+
+                // Preenche os campos (você pode buscar os dados do servidor aqui, se necessário)
+                document.getElementById("book-id").value = bookId;
+                document.getElementById("status").value = "";
+            });
+        });
+
+        // Função de submissão do formulário
+        document.getElementById("book-edit-form").addEventListener("submit", async (event) => {
+            event.preventDefault();
+
+            const bookId = document.getElementById("book-id").value;
+            const updatedBook = {
+                status: document.getElementById("status").value
+            };
+
+            const response = await fetch(`/books/${bookId}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(updatedBook)
+            });
+
+            if (response.ok) {
+                alert("Livro atualizado com sucesso!");
+                location.reload(); // Recarrega a página para mostrar os dados atualizados
+            } else {
+                alert("Erro ao atualizar o livro.");
+            }
+        });
+    </script>
+</body>
+</html>

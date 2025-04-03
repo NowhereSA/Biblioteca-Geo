@@ -1,11 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Biblioteca</title>
+    <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
-    <h1>Hello World</h1>
+    <h1>Biblioteca</h1>
+    <div id="form-section">
+        <h2>Adicionar Livro</h2>
+        <form id="add-book-form" action="/books" method="post">
+            <input type="text" id="titulo" name="titulo" placeholder="Título" required>
+            <input type="text" id="autor" name="autor" placeholder="Autor" required>
+            <input type="text" id="genero" name="genero" placeholder="Gênero" required>
+            <input type="text" id="status" name="status" placeholder="Status" required>
+            <textarea type="text" id="descricao" name="descricao" placeholder="Descrição"></textarea>
+            <button type="submit">Adicionar</button>
+        </form>
+    </div>
+    <div id="book-list">
+        <h2>Livros Disponíveis</h2>
+        <ul id="books">
+            {% for book in books %}
+            <li>
+                <strong>Titulo: {{ book.titulo }}</strong> 
+                <p><strong>Autor: {{ book.autor }}</strong> </p>
+                <p><strong>Descrição: {{ book.descricao }}</strong></p>
+            </li>
+            {% endfor %}
+        </ul>  
+    </div>
 </body>
 </html>

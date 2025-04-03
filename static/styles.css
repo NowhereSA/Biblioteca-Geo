@@ -1,0 +1,83 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centraliza horizontalmente */
+    justify-content: flex-start; /* Posiciona os itens no topo */
+    height: 100vh; /* Altura total da janela */
+    background-color: #F3E5AB; /* Fundo amarelo claro */
+    color: #4B0082; /* Texto roxo escuro */
+}
+
+h1, h2 {
+    color: #4B0082; /* Roxo escuro */
+    text-align: center; /* Centraliza os títulos */
+    margin-bottom: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 300px;
+    background-color: #FFFFE0; /* Fundo amarelo suave */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adiciona sombra */
+    margin-bottom: 30px; /* Espaço entre o formulário e os livros */
+}
+
+form input, form textarea, form button {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #4B0082; /* Bordas roxas */
+    border-radius: 5px;
+}
+
+button {
+    background-color: #4B0082; /* Roxo */
+    color: #FFFFE0; /* Amarelo suave */
+    border: none;
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s ease; /* Efeito suave ao passar o mouse */
+}
+
+button:hover {
+    background-color: #6A0DAD; /* Roxo mais claro ao passar o mouse */
+}
+
+#book-list {
+    margin-top: 30px;
+    width: 90%; /* Deixa mais largo e visível */
+    text-align: center;
+    padding: 10px;
+}
+
+ul {
+    list-style-type: none; /* Remove os marcadores padrão */
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap; /* Permite os itens quebrarem linha */
+    justify-content: center; /* Centraliza os livros */
+    gap: 15px; /* Espaço entre os itens */
+}
+
+li {
+    width: 200px; /* Largura consistente para cada item */
+    padding: 15px;
+    background-color: #FFF8DC; /* Amarelo claro */
+    border: 1px solid #4B0082; /* Bordas roxas */
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adiciona sombra ao item */
+    text-align: center; /* Centraliza o texto dentro do item */
+}
+
+li strong {
+    color: #4B0082; /* Destaque para os títulos */
+    font-size: 18px; /* Tamanho maior para os títulos */
+}

@@ -1,0 +1,53 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #F3E5AB; /* Fundo amarelo claro */
+    color: #4B0082; /* Texto roxo escuro */
+    text-align: center;
+}
+
+h1, h2 {
+    color: #4B0082;
+}
+
+table {
+    margin: 20px auto;
+    border-collapse: collapse;
+    width: 80%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+thead {
+    background-color: #4B0082;
+    color: #FFF8DC; /* Texto amarelo claro */
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #4B0082; /* Bordas roxas */
+    text-align: center;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #FFF8DC; /* Fundo amarelo claro para linhas pares */
+}
+
+button {
+    padding: 5px 10px;
+    background-color: #4B0082;
+    color: #FFFFE0;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #6A0DAD; /* Roxo mais claro ao passar o mouse */
+}
+
+.edit-btn {
+    margin-right: 5px;
+}

@@ -1,5 +1,5 @@
 from fastapi import HTTPException, FastAPI, Form, Request
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, RedirectResponse
 #from bson import ObjectId
 import database as db
 import models as md
@@ -46,14 +46,21 @@ async def add_book(data: md.Annotated[md.Biblioteca, Form()]):
     #print(data)
     data_dict = data.model_dump(by_alias=True)
     result = db.collection.find_one({"titulo": data_dict["titulo"]})
+
     if result:
         if data_dict["titulo"] == result["titulo"]:
             raise HTTPException(status_code=400, detail="Já contém um livro igual.")
+        
     else: 
         db.collection.create_index([("id", 1)], unique=True)
         data_dict["id"] = db.collection.count_documents({}) + 1
+
     db.collection.insert_one(data_dict)
-    return {"message": "Adicionado com sucesso!"}
+
+    return RedirectResponse(
+        url="/books",
+        status_code=303
+    )
 
 
 @app.put("/books/{book_id}")

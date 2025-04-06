@@ -20,7 +20,6 @@ async def main(request: Request, skip=0, limit=10):
             "status": str(book["status"]),
             "descricao": str(book["descricao"])
         })
-    # Combine request e books no mesmo dicionário
     context = {"request": request, "books": books}
     return md.templates.TemplateResponse("livros.html", context)
 
@@ -43,7 +42,6 @@ async def show_book(request: Request, skip= 0, limit = 10):
 @app.post("/books")
 async def add_book(data: md.Annotated[md.Biblioteca, Form()]):
 #async def add_book(data: md.Biblioteca):
-    #print(data)
     data_dict = data.model_dump(by_alias=True)
     result = db.collection.find_one({"titulo": data_dict["titulo"]})
 
